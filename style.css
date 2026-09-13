@@ -3,6 +3,17 @@
     width: 150px;
     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 2);
     cursor: pointer;
+    animation: bob 2s ease-in-out infinite;
+}
+
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 #cookieButton:active {
