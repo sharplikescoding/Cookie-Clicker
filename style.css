@@ -1,0 +1,25 @@
+#cookieButton {
+    image-rendering: pixelated;
+    width: 150px;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 2);
+    cursor: pointer;
+}
+
+#cookieButton:active {
+    transform: scale(0.8);
+    transition: transform 0.1s;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+    background-image: url(background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+}
