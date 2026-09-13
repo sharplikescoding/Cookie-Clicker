@@ -14,6 +14,11 @@ let upgradeClicker = document.getElementById("upgradeClicker")
 // The button to buy an auto-clicker
 let autoClicker = document.getElementById("autoClicker")
 
+// The volume slider element itself (not just a one-time value!)
+// We read its .value live, every time we need it, so dragging it
+// actually changes the volume of future sounds.
+let volumeSlider = document.getElementById("volume")
+
 
 // ============================================
 // GAME STATE (the numbers that change as you play)
@@ -24,32 +29,6 @@ let multiplier = 1
 let multiplierCost = 25
 let autoClickers = 0
 let autoClickerCost = 15
-
-
-// ============================================
-// BACKGROUND MUSIC
-// ============================================
-
-// Set up the background music track
-const bgMusic = new Audio("520554__deleted_user_11009121__lofi-loop-9.mp3")
-bgMusic.loop = true       // repeat forever
-bgMusic.volume = 0.3      // keep it quiet so it doesn't overpower click sounds
-
-// Browsers allow audio to autoplay as long as it starts muted,
-// so we start it muted right away on page load...
-bgMusic.muted = true
-bgMusic.play().catch(() => {
-    // If even muted autoplay gets blocked, we'll just wait for the
-    // first click instead (handled below) - this stops the console
-    // from showing a scary red error message.
-})
-
-// ...then unmute it the very first time the player clicks anywhere.
-// This is the closest thing to "plays immediately on load" that browsers allow.
-document.addEventListener('click', function unmuteMusic() {
-    bgMusic.muted = false
-    document.removeEventListener('click', unmuteMusic) // only needs to run once
-}, { once: true })
 
 
 // ============================================
@@ -116,7 +95,9 @@ cookieButton.addEventListener('click', function(){
     cookies += multiplier
     cookieDisplayAmt()
     saveGame()
+
     const clickSound = new Audio("341695__projectsu012__coins-1.mp3")
+    clickSound.volume = Number(volumeSlider.value)   // read the slider's CURRENT position
     clickSound.play()
 })
 
