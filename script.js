@@ -49,7 +49,9 @@ function cookieDisplayAmt() {
 function saveGame() {
     localStorage.setItem("cookies", cookies)
     localStorage.setItem("multiplier", multiplier)
+    localStorage.setItem("multiplierCost", multiplierCost)
     localStorage.setItem("autoClickers", autoClickers)
+    localStorage.setItem("autoClickerCost", autoClickerCost)
 }
 
 // Load saved progress when the page first loads
@@ -58,7 +60,18 @@ function loadGame() {
         cookies = Number(localStorage.getItem("cookies"))
         multiplier = Number(localStorage.getItem("multiplier"))
         autoClickers = Number(localStorage.getItem("autoClickers"))
+
+        // Fall back to the starting cost if this save has no cost saved,
+        // or if it was corrupted by an earlier bug that saved it as 0
+        let savedMultiplierCost = Number(localStorage.getItem("multiplierCost"))
+        multiplierCost = savedMultiplierCost > 0 ? savedMultiplierCost : 25
+
+        let savedAutoClickerCost = Number(localStorage.getItem("autoClickerCost"))
+        autoClickerCost = savedAutoClickerCost > 0 ? savedAutoClickerCost : 15
+
         cookieDisplayAmt()
+        upgradeClicker.innerText = 'Upgrade Clicks/s for ' + Math.floor(multiplierCost) + ' cookies'
+        autoClicker.innerText = 'Buy auto-clicker for ' + Math.floor(autoClickerCost) + ' cookies'
     }
 }
 
