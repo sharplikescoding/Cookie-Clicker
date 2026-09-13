@@ -38,7 +38,11 @@ bgMusic.volume = 0.3      // keep it quiet so it doesn't overpower click sounds
 // Browsers allow audio to autoplay as long as it starts muted,
 // so we start it muted right away on page load...
 bgMusic.muted = true
-bgMusic.play()
+bgMusic.play().catch(() => {
+    // If even muted autoplay gets blocked, we'll just wait for the
+    // first click instead (handled below) - this stops the console
+    // from showing a scary red error message.
+})
 
 // ...then unmute it the very first time the player clicks anywhere.
 // This is the closest thing to "plays immediately on load" that browsers allow.
